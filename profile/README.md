@@ -42,15 +42,52 @@
 
 
 
-## 1. Git分支
+### 1. Git分支
 
-分支暂定使用 `master`。
+分支暂定使用 `master` 。
 
-协作者提交代码应创建 `pr` 请求代码合并，避免直接推送导致错误代码混淆。
+协作者应 `fork` 个人代码副本，提交代码应创建 `pr` 请求代码合并，避免直接推送导致错误代码混淆。
 
-子分支创建暂未明确规定，一般情况下不推荐创建子分支。
+#### 1.1 Fork 及 pr 提交操作步骤:
 
-## 2. Commit 提交
+(1) 进入项目主页 → 点击 `Fork` → 创建个人副本；克隆个人副本到本地。
+
+(2) 设置原始仓库
+
+```
+git remote add upstream https://github.com/312Hz/[仓库名称]
+```
+
+(3) 提交 `pr`
+
+```bash
+git fetch upstream # 拉取最新代码
+git pull upstream master # 同步原始仓库 master 代码
+git checkout -b [类型表述(feat/fix...)]/[代码内容大概描述(任意)] # 创建本地分支
+```
+
+修改代码需要推送到个人备份仓库中，此处不做过多演示。
+
+代码提交完毕后需要前往副本仓库根据目标仓库及分支创建 `pr` 请求。
+
+❗需要保持分支与原仓库同步
+
+```bash
+git fetch upstream
+git rebase upstream/master
+git push origin [分支名称] --force #强制推送
+```
+
+(4) 清理代码
+
+```bash
+git checkout master
+git pull upstream master
+git branch -D [分支名称] # 删除本地分支
+git push origin --delete [分支名称] # 删除远程分支=
+```
+
+### 2. Commit 提交
 
 > commit 提交应该按照不同操作进行区分，以方便协作者快速定位
 
